@@ -15,10 +15,24 @@ fn panic(_info: &PanicInfo) -> ! {
 
 static HELLO: &[u8] = b"Hello World!";
 
+extern "C" {
+    fn __kernel_start();
+    fn __kernel_end();
+
+}
+
 fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
     let cmos = unsafe { SerialPort::new(0x3F8) };
     cmos.init();
     cmos.data.write(b'h');
+
+    let mut size = unsafe { __kernel_end as usize - __kernel_start as usize };
+
+    while size > 0 {
+        cmos.data.write((size % 10) as u8);
+        size /= 10;
+    }
+
     // let vga_buffer = 0xb8000 as *mut u8;
     //
     // for (i, &byte) in HELLO.iter().enumerate() {

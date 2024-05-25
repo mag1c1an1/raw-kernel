@@ -1,4 +1,4 @@
-ENTRY(__multiboot_boot)
+ENTRY(_start)
 OUTPUT_ARCH(i386:x86-64)
 OUTPUT_FORMAT(elf64-x86-64)
 

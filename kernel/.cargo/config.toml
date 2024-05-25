@@ -1,2 +1,2 @@
 [target.x86_64-unknown-none]
-rustflags = ["-Clink-arg=-Tsrc/linker.ld"]
+rustflags = ["-Clink-arg=-Tlinker_scripts/x86_64.ld"]
